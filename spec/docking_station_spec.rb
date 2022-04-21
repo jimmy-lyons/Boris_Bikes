@@ -45,4 +45,14 @@ describe DockingStation do
     @bike = nil
     expect{docking_station.release_bike}.to raise_error
   end
+
+  it 'does not let you put more than one bike in a docking station' do
+    docking_station = DockingStation.new
+    bike = Bike.new
+    bike2 = Bike.new
+    docking_station.bike = bike
+
+    expect{docking_station.dock_bike(bike2)}.to raise_error
+  end
+  
 end

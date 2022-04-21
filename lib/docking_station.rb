@@ -5,11 +5,11 @@ class DockingStation
   end
 
   def release_bike
-   @bike == nil ? fail "No bikes available" : Bike.new
+   @bike == nil ? fail : Bike.new
   end
 
   def dock_bike(bike)
-    @bike = bike
+    @bike == nil ? @bike = bike : fail
     "Bike Docked"
   end
 
