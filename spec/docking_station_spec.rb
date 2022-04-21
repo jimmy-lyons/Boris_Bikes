@@ -1,9 +1,40 @@
 require 'docking_station'
 
 describe DockingStation do
+  # unit test
   it 'releases bike' do
     docking_station = DockingStation.new
 
-    expect(docking_station.release_bike).to eq("release")
+    expect{docking_station.release_bike}.not_to raise_error
+  end
+
+  # feature test
+  it 'release working bike' do
+    docking_station = DockingStation.new
+    bike = docking_station.release_bike
+
+    expect(bike.working?).to eq("working")
+  end
+
+  it 'docks bike at docking station' do
+    docking_station = DockingStation.new
+    bike = Bike.new
+
+    expect(docking_station.dock_bike(bike)).to eq("Bike Docked")
+  end
+
+  it 'bike dock method works' do
+    docking_station = DockingStation.new
+    bike = Bike.new
+
+    expect{docking_station.dock_bike(bike)}.not_to raise_error
+  end
+
+  it 'user stores bike and docking station tells user its not empty' do
+    docking_station = DockingStation.new
+    bike = Bike.new
+    docking_station.dock_bike(bike)
+
+    expect(docking_station.bike).to eq(bike)
   end
 end
