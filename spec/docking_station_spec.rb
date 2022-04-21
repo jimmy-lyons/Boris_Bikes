@@ -4,16 +4,18 @@ describe DockingStation do
   # unit test
   it 'releases bike' do
     docking_station = DockingStation.new
-
+    bike = Bike.new
+    docking_station.bike = bike
     expect{docking_station.release_bike}.not_to raise_error
   end
 
   # feature test
   it 'release working bike' do
     docking_station = DockingStation.new
-    bike = docking_station.release_bike
-
-    expect(bike.working?).to eq("working")
+    bike = Bike.new
+    docking_station.bike = bike
+    released_bike = docking_station.release_bike
+    expect(released_bike.working?).to eq(true)
   end
 
   it 'docks bike at docking station' do
@@ -36,5 +38,11 @@ describe DockingStation do
     docking_station.dock_bike(bike)
 
     expect(docking_station.bike).to eq(bike)
+  end
+
+  it 'no bike is released if docking station is empty' do
+    docking_station = DockingStation.new
+    @bike = nil
+    expect{docking_station.release_bike}.to raise_error
   end
 end

@@ -1,7 +1,11 @@
 class DockingStation
-  
+
+  def initialize
+    @bike = nil
+  end
+
   def release_bike
-    Bike.new
+   @bike == nil ? fail "No bikes available" : Bike.new
   end
 
   def dock_bike(bike)
@@ -9,5 +13,5 @@ class DockingStation
     "Bike Docked"
   end
 
-  attr_reader :bike
+  attr_accessor :bike
 end
