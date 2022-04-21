@@ -1,17 +1,21 @@
 class DockingStation
 
   def initialize
-    @bike = nil
+    @bikes = []
+    @capacity = 20
   end
 
   def release_bike
-   @bike == nil ? fail : Bike.new
+   @bikes.empty? ? fail : @bikes[0]
+   @bikes.delete(0)
+   @bikes
   end
 
   def dock_bike(bike)
-    @bike == nil ? @bike = bike : fail
-    "Bike Docked"
+    fail unless @bikes.length <= @capacity
+    @bikes << [bike]
   end
 
-  attr_accessor :bike
+  attr_accessor :bikes
+  attr_reader :capacity
 end

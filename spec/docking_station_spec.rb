@@ -4,8 +4,10 @@ describe DockingStation do
   # unit test
   it 'releases bike' do
     docking_station = DockingStation.new
-    bike = Bike.new
-    docking_station.bike = bike
+    docking_station.dock_bike(Bike.new)
+    puts "HELLO"
+    p docking_station.bikes
+    p docking_station.bikes[0]
     expect{docking_station.release_bike}.not_to raise_error
   end
 
@@ -13,7 +15,7 @@ describe DockingStation do
   it 'release working bike' do
     docking_station = DockingStation.new
     bike = Bike.new
-    docking_station.bike = bike
+    docking_station.bikes << bike
     released_bike = docking_station.release_bike
     expect(released_bike.working?).to eq(true)
   end
@@ -22,7 +24,7 @@ describe DockingStation do
     docking_station = DockingStation.new
     bike = Bike.new
 
-    expect(docking_station.dock_bike(bike)).to eq("Bike Docked")
+    expect(docking_station.dock_bike(bike)).to eq(bike)
   end
 
   it 'bike dock method works' do
@@ -37,7 +39,7 @@ describe DockingStation do
     bike = Bike.new
     docking_station.dock_bike(bike)
 
-    expect(docking_station.bike).to eq(bike)
+    expect(docking_station.bikes).to eq(bike)
   end
 
   it 'no bike is released if docking station is empty' do
@@ -46,13 +48,10 @@ describe DockingStation do
     expect{docking_station.release_bike}.to raise_error
   end
 
-  it 'does not let you put more than one bike in a docking station' do
+  it 'does not let you put more bikes in than the capacity of a docking station' do
     docking_station = DockingStation.new
-    bike = Bike.new
-    bike2 = Bike.new
-    docking_station.bike = bike
-
-    expect{docking_station.dock_bike(bike2)}.to raise_error
+    docking_station.capacity.times { docking_station.dock_bike(Bike.new) }
+    expect{docking_station.dock_bike(Bike.new)}.to raise_error
   end
-  
+
 end
