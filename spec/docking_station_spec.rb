@@ -5,9 +5,7 @@ describe DockingStation do
   it 'releases bike' do
     docking_station = DockingStation.new
     docking_station.dock_bike(Bike.new)
-    puts "HELLO"
-    p docking_station.bikes
-    p docking_station.bikes[0]
+
     expect{docking_station.release_bike}.not_to raise_error
   end
 
@@ -24,7 +22,7 @@ describe DockingStation do
     docking_station = DockingStation.new
     bike = Bike.new
 
-    expect(docking_station.dock_bike(bike)).to eq(bike)
+    expect(docking_station.dock_bike(bike)).to eq(docking_station.bikes)
   end
 
   it 'bike dock method works' do
@@ -39,18 +37,21 @@ describe DockingStation do
     bike = Bike.new
     docking_station.dock_bike(bike)
 
-    expect(docking_station.bikes).to eq(bike)
+    expect(docking_station.bikes).to eq([bike])
   end
 
   it 'no bike is released if docking station is empty' do
     docking_station = DockingStation.new
-    @bike = nil
+    @bikes = nil
+    
     expect{docking_station.release_bike}.to raise_error
   end
 
   it 'does not let you put more bikes in than the capacity of a docking station' do
     docking_station = DockingStation.new
     docking_station.capacity.times { docking_station.dock_bike(Bike.new) }
+    p docking_station.bikes.length
+
     expect{docking_station.dock_bike(Bike.new)}.to raise_error
   end
 
